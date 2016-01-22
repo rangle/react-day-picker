@@ -10,6 +10,7 @@ import DisabledDays from "./examples/DisabledDays";
 import InputField from "./examples/InputField";
 import Localized from "./examples/Localized";
 import LocalizedCustom from "./examples/LocalizedCustom";
+import OverlayPicker from "./examples/OverlayPicker";
 import Range from "./examples/Range";
 import Restricted from "./examples/Restricted";
 import SelectableDay from "./examples/SelectableDay";
@@ -50,6 +51,11 @@ const EXAMPLES = {
     title: "Restrict Months",
     description: "The <code>fromMonth</code> and <code>toMonth</code> props allow to restrict the navigation between months. The following day picker is enabled from April to November 2015. A <code>disabled</code> modifier displays the other days as grayed out.",
     Component: Restricted
+  },
+  overlay: {
+    title: "OverlayPicker",
+    description: "Example overlay.",
+    Component: OverlayPicker
   },
   localized: {
     title: "Localization (moment.js)",

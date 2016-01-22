@@ -43,6 +43,7 @@ module.exports = {
           "InputField",
           "Localized",
           "LocalizedCustom",
+          "OverlayPicker",
           "Range",
           "Restricted",
           "SelectableDay",
