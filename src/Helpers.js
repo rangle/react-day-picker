@@ -24,23 +24,30 @@ export default {
     return resultDate.getDate();
   },
 
-  getWeekArray(d, firstDayOfWeek=LocaleUtils.getFirstDayOfWeek()) {
+  getWeekArray(d, firstDayOfWeek=LocaleUtils.getFirstDayOfWeek(), minWeeks=0) {
     const daysInMonth = this.getDaysInMonth(d);
     const dayArray = [];
-
     let week = [];
     const weekArray = [];
 
+    // populate dayArray with an array of dates
+    // for each day of the month, setting the time at noon
     for (let i = 1; i <= daysInMonth; i++) {
       dayArray.push(new Date(d.getFullYear(), d.getMonth(), i, 12));
     }
 
+    // use the dayArray to populate the weekArray, a collection
+    // of arrays containing date objects
     dayArray.forEach((day) => {
+      // bounds check, start a new week if day is first day of the week
       if(week.length > 0 && day.getDay() === firstDayOfWeek) {
         weekArray.push(week);
         week = [];
       }
+      // add the current day to the current week
       week.push(day);
+      // if the current day is the last day of the month,
+      // add the current week to the weeksArray
       if (dayArray.indexOf(day) === dayArray.length - 1) {
         weekArray.push(week);
       }
@@ -62,8 +69,28 @@ export default {
       lastWeek.push(outsideDate);
     }
 
-    return weekArray;
+    // if minWeeks hasn't been met yet, continue adding days until
+    // the minimum has been met
+    if (weekArray.length < minWeeks) {
+      const lastWeekIndex = weekArray.length - 1;
+      const lastDayIndex = weekArray[lastWeekIndex].length - 1
+      const lastDay = weekArray[lastWeekIndex][lastDayIndex];
+      const numWeeksToAdd = minWeeks - weekArray.length;
+      // for each week that needs to be added, populate a new
+      // week array and add it to the weeksArray
+      for (let weekNum = 0; weekNum < numWeeksToAdd; weekNum++) {
+        week = [];
+        // for each day in the week, increment the lastDay by 1 day
+        // and append it to the week array
+        for (let dayNum = 0; dayNum < 7; dayNum++) {
+          lastDay.setDate(lastDay.getDate() + 1);
+          week.push(DateUtils.clone(lastDay))
+        }
+        weekArray.push(week);
+      }
+    }
 
+    return weekArray;
   },
 
   getModifiersForDay(d, modifierFunctions) {
