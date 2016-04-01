@@ -74,7 +74,7 @@ export default {
     if (weekArray.length < minWeeks) {
       const lastWeekIndex = weekArray.length - 1;
       const lastDayIndex = weekArray[lastWeekIndex].length - 1
-      const lastDay = weekArray[lastWeekIndex][lastDayIndex];
+      const lastDay = DateUtils.clone(weekArray[lastWeekIndex][lastDayIndex]);
       const numWeeksToAdd = minWeeks - weekArray.length;
       // for each week that needs to be added, populate a new
       // week array and add it to the weeksArray
